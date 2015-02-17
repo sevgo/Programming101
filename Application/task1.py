@@ -12,8 +12,8 @@ def fill_tetrahedron(num):
         print ("Please provide a positive integer!")
         return False
     else:
-        return ((math.pow(num, 3) * math.sqrt(2)) / 12) / 1000
-
+        vol = ((math.pow(num, 3) * math.sqrt(2)) / 12) / 1000
+        return vol
 
 
 if __name__ == "__main__":
