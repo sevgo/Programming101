@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Task1: Fill tetrahedron with water
 import math
 
