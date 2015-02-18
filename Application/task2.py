@@ -16,24 +16,25 @@ def get_volumes_sorted(sides):
     return vol
 
 
-def get_sum_volumes(volumes):
-    return sum(float(vol) for vol in volumes)
-
-
 def tetrahedron_filled(tetrahedrons, water):
     tetrahedrons_counter = 0
     volumes = get_volumes_sorted(tetrahedrons)
+    summ_volumes = sum(float(vol) for vol in volumes)
     if volumes:
-        if water >= get_sum_volumes(volume):
-            tetrahedrons_counter = volumes.len()
+        if water >= summ_volumes:
+            tetrahedrons_counter = len(volumes)
         else:
             for element in volumes:
-                if element <= water
+                if element > water:
+                    break
+                else:
+                    tetrahedrons_counter += 1
+                    water -= element
+
+    return tetrahedrons_counter
 
 
 if __name__ == "__main__":
-    sides = input("Enter comma-separated elements of a list, please: ")
-    sides = sides.split(",")
-    print (sides)
-    lst = get_volumes_sort(sides)
-    print (lst)
+    #sides = input("Enter comma-separated elements of a list, please: ")
+    #sides = sides.split(",")
+    print (tetrahedron_filled([110, 210, 186, 97, 105], 2500))
