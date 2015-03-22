@@ -5,9 +5,8 @@
 def sum_matrix(n):
     """ Returns a sum of all elements in a
     given matrix """
-    p = [sum(x) for x in n]
-    print (len(p))
-    return sum(p)
+    
+    return sum([sum(x) for x in n])
 
 
 if __name__ == '__main__':
