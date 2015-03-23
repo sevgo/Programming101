@@ -3,9 +3,8 @@
 
 
 def sum_matrix(n):
-    """ Returns a sum of all elements in a
-    given matrix """
-    
+    """ Returns a sum of all elements in a given matrix """
+
     return sum([sum(x) for x in n])
 
 
