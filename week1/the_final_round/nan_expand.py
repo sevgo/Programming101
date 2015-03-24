@@ -7,4 +7,4 @@ def nan_expand(times):
     return nota + "NaN" if times > 0 else ''
 
 if __name__ == "__main__":
-    print (nan_expand(0))
+    print (nan_expand(5))
