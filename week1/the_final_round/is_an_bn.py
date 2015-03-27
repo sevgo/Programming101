@@ -6,7 +6,7 @@ from group import group
 def is_an_bn(word):
     word_lst = [ch for ch in word]
     groupped = group(word_lst)
-    if len(word_lst) > 2 or len(groupped[0]) != len(groupped[1]):
+    if len(groupped) > 2 or len(groupped[0]) != len(groupped[1]):
         return False
     else:
         a = set(groupped[0])
