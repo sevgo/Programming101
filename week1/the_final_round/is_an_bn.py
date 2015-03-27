@@ -4,6 +4,9 @@ from group import group
 
 
 def is_an_bn(word):
+    if len(word) == 0:
+        return False
+
     word_lst = [ch for ch in word]
     groupped = group(word_lst)
     if len(groupped) > 2 or len(groupped[0]) != len(groupped[1]):
@@ -19,3 +22,5 @@ def is_an_bn(word):
 
 if __name__ == "__main__":
     print (is_an_bn("aaaaabbbbb"))
+    print (is_an_bn(""))
+    print (is_an_bn("abbb"))
