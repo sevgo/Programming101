@@ -22,7 +22,7 @@ class BankAccount:
 
     def balance(self):
         self.__history.append('Balance check -> {}BGN'.format(self.amount))
-        print(self.amount)
+        #print(self.amount)
         return self.amount
 
     def withdraw(self, money):
@@ -76,8 +76,8 @@ if __name__ == '__main__':
     print(user2)
     user1.deposit(100)
     user2.withdraw(10)
-    user1.balance()
+    print(user1.balance())
     user1.transfer_to(user2, 70)
     print(user1.history())
-    user2.balance()
+    print(user2.balance())
     print(user2.history())
