@@ -39,7 +39,8 @@ class Panda:
         return eq_names and eq_email and eq_gender
 
     def __str__(self):
-        return self.name + self.gender + self.mail
+        #return self.name + self.gender + self.mail
+        return self.name
 
     def __hash__(self):
         return hash(self.__str__())
