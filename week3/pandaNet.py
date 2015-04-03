@@ -8,14 +8,12 @@ class PandaSocialNetwork:
         self.network = {}
 
     def add_panda(self, new_member):
-
         if new_member in self.network:
             raise PandaAlreadyThere
         else:
             self.network[new_member] = []
 
     def has_panda(self, panda):
-
         if panda in self.network:
             return True
         else:
@@ -23,15 +21,14 @@ class PandaSocialNetwork:
 
     def are_friends(self, panda1, panda2):
         network = self.network
+        if panda2 in network[panda1]:
+            return True
 
-        for key in network:
-            panda1_n_panda2 = key == panda1 and panda2 in network[key]
-            panda2_n_panda1 = key == panda2 and panda1 in network[key]
+        if panda1 in network[panda2]:
+            return True
 
-            if panda1_n_panda2 or panda2_n_panda1:
-                return True
-            else:
-                return False
+        return False
+
 
     def make_friends(self, panda1, panda2):
 
@@ -48,11 +45,47 @@ class PandaSocialNetwork:
             network[panda1].append(panda2)
             network[panda2].append(panda1)
 
+
     def friends_of(self, member):
         if not self.has_panda(member):
             return False
         else:
             return self.network[member]
+
+    def connection_level(self, panda1, panda2):
+
+        network = self.network
+        if not self.has_panda(panda1) or not self.has_panda(panda2):
+            return False
+
+        if self.are_friends(panda1, panda2):
+            return 1
+
+        visited = set()
+        queue = []
+        path_to = {}
+        path_lenght = 0
+        found = False
+        queue.append(panda1)
+        visited.add(panda1)
+        path_to[panda1] = None
+        while len(queue) != 0:
+            current_node = queue.pop(0)
+            if current_node == panda2:
+                found = True
+                break
+            for friend in network[current_node]:
+                if friend not in visited:
+                    path_to[friend] = current_node
+                    visited.add(friend)
+                    queue.append(friend)
+
+        if found:
+            while path_to[panda2] is not None:
+                path_lenght += 1
+                panda2 = path_to[panda2]
+
+        return path_lenght
 
 
 class PandaAlreadyThere(Exception):
