@@ -14,10 +14,7 @@ class PandaSocialNetwork:
             self.network[new_member] = []
 
     def has_panda(self, panda):
-        if panda in self.network:
-            return True
-        else:
-            return False
+        return panda in self.network
 
     def are_friends(self, panda1, panda2):
         network = self.network
@@ -86,6 +83,43 @@ class PandaSocialNetwork:
                 panda2 = path_to[panda2]
 
         return path_lenght
+
+    def are_connected(self, panda1, panda2):
+        connected = False
+        visited = set()
+        queue = []
+        visited.add(panda1)
+        queue.append(panda1)
+
+        while len(queue) != 0:
+            current_node = queue.pop(0)
+            if current_node == panda2:
+                return True
+            for friend in self.network[current_node]:
+                if friend not in visited:
+                    visited.add(friend)
+                    queue.append(friend)
+
+        return False
+
+    def how_many_gender_in_network(self, level, panda, gender):
+        counter = 0
+        visited = set()
+        queue = []
+        visited.add(panda)
+        queue.append(panda)
+        while len(queue) != 0:
+            current_node = queue.pop(0)
+            for friend in self.network[current_node]:
+                if friend not in visited:
+                    visited.add(friend)
+                    if level == 2:
+                        queue.append(friend)
+                    if friend.gender == gender:
+                        counter += 1
+
+        return counter
+
 
 
 class PandaAlreadyThere(Exception):

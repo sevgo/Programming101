@@ -68,12 +68,16 @@ class Test_PandaNet(unittest.TestCase):
         self.assertEqual(self.pNet.connection_level(self.ivo, self.rado), 1)
         self.assertFalse(self.pNet.connection_level(self.vyara, self.cveti))
 
-    # def test_connected_pandas(self):
-    #     pass
+    def test_connected_pandas(self):
+        self.pNet.add_panda(self.dora)
+        self.assertFalse(self.pNet.are_connected(self.ivo, self.dora))
+        self.assertTrue(self.pNet.are_connected(self.ana, self.desi))
 
-    # def test_how_many_genders(self):
-    #     pass
-
+    def test_how_many_genders(self):
+        net = self.pNet
+        ivo = self.ivo
+        self.assertEqual(net.how_many_gender_in_network(1, ivo, "female"), 2)
+        self.assertEqual(net.how_many_gender_in_network(2, ivo, "female"), 3)
 
 if __name__ == '__main__':
     unittest.main()
