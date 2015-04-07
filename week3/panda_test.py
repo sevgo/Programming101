@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import unittest
-from validate_email import validate_email
 from panda import Panda, NotValidEmail
 
 
@@ -11,11 +10,10 @@ class Test_Panda(unittest.TestCase):
         self.drago = Panda("Drago", "drago@yahoo.com", "male")
         self.iva = Panda("Iva", "iva@gmail.com","female")
         self.dora = Panda("Dora", "dora@abv.bg", "female")
-        self.panda = Panda("Pesho", "p@p.", "male")
 
     def test_panda_birth(self):
         self.assertIsInstance(self.dora, Panda)
-        self.assertIsInstance(slef.panda, Panda)
+        self.assertIsInstance(self.drago, Panda)
 
     def test_email_address(self):
         with self.assertRaises(NotValidEmail):

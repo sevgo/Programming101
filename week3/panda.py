@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from validate_email import validate_email
 from re import match
 
 
