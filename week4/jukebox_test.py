@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import unittest
-from jukebox import Song
+from jukebox import Song, Playlist
 
 
 class Test_JukeBox(unittest.TestCase):
@@ -12,6 +12,8 @@ class Test_JukeBox(unittest.TestCase):
                            artist="Calvin Harris")
         self.hd = Song(title="Hideaway", artist="Kiesza",
                              album="Hideaway", length="4:34")
+
+        self.playlist = Playlist(name="misc.pl")
 
     def test_is_it_song(self):
         self.assertIsInstance(self.hideaway, Song)
@@ -29,14 +31,22 @@ class Test_JukeBox(unittest.TestCase):
             str(self.hideaway), "Kiesza - Hideaway from Hideaway - 4:34")
 
     def test_is_hashable(self):
-        self.assertEqual(
-            hash(self.hideaway), hash("Kiesza - Hideaway from Hideaway - 4:34"))
+        self.assertEqual(hash(self.hideaway),
+                         hash("Kiesza - Hideaway from Hideaway - 4:34"))
 
     def test_same_song(self):
         self.assertNotEqual(self.hideaway, self.summer)
         self.assertFalse(self.summer == self.hideaway)
         self.assertTrue(self.hd == self.hideaway)
 
+    def test_is_it_playlist_object(self):
+        self.assertIsInstance(self.playlist, Playlist)
+        self.assertTrue(self.playlist.name == "misc.pl")
+
+    def test_adding_song_to_playslist(self):
+        self.playlist.add_song(self.hideaway)
+        self.assertEqual(self.hideaway, self.playlist._playlist[0])
+        self.playlist.add_song("TestSong")
 
 if __name__ == '__main__':
     unittest.main()

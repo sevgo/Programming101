@@ -63,11 +63,18 @@ class Song:
 
 class Playlist:
     """ A playlist class """
-    playlist = []
     def __init__(self, name="PlayListName", repeat=False, shuffle=False):
         self.name = name
         self.repeat = repeat
         self.shuffle = shuffle
+        self._playlist = []
+
+    def add_song(self, song):
+        if not isinstance(song, Song):
+            raise TypeError("It's not a Song object!")
+
+        self._playlist.append(song)
+
 
 if __name__ == "__main__":
     hideaway = Song(
