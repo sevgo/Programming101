@@ -13,7 +13,17 @@ class Test_JukeBox(unittest.TestCase):
         self.hd = Song(title="Hideaway", artist="Kiesza",
                              album="Hideaway", length="4:34")
 
+        manowar_hail = Song(title="Hail and Kill", artist="manowar",
+                            album="Kings of Metal", length="5:59")
+        manowar_heart = Song(title="Heart of Steal", artist="manowar",
+                             album="Kings of Metal", length="5:10")
+        manowar_blood = Song(title="Blood of the Kings", artist="manowar",
+                             album="Kings of Metal", length="7:30")
+        songs = [self.hd, manowar_heart, manowar_hail, manowar_blood,
+                 self.summer]
         self.playlist = Playlist(name="misc.pl")
+
+        self.playlist.add_songs(songs)
 
     def test_is_it_song(self):
         self.assertIsInstance(self.hideaway, Song)
@@ -44,9 +54,36 @@ class Test_JukeBox(unittest.TestCase):
         self.assertTrue(self.playlist.name == "misc.pl")
 
     def test_adding_song_to_playslist(self):
-        self.playlist.add_song(self.hideaway)
+        # self.playlist.add_song(self.hideaway)
         self.assertEqual(self.hideaway, self.playlist._playlist[0])
-        self.playlist.add_song("TestSong")
+        with self.assertRaises(TypeError):
+            self.playlist.add_song("TestSong")
+
+    def test_removing_song_from_playlist(self):
+        self.playlist = Playlist(name="mic.pl")
+        self.playlist.add_song(self.hideaway)
+        with self.assertRaises(ValueError):
+            self.playlist.remove_song(self.summer)
+
+    def test_adding_songs_to_playlist(self):
+        with self.assertRaises(TypeError):
+            self.playlist.add_songs({"Track1": "Unknown", "Track2": "Known"})
+        self.playlist.add_songs([self.summer, self.hideaway])
+
+    def test_playlist_length(self):
+        self.playlist.add_songs([self.summer, self.hideaway])
+        self.assertIsInstance(self.playlist.total_length(), str)
+
+    def test_artists(self):
+        self.assertIsInstance(self.playlist.artists(), dict)
+        self.assertEqual(self.playlist.artists()['manowar'], 3)
+
+    def test_next_song(self):
+        self.playlist._play_song()
+        curr_s = self.playlist.next_song()
+        next_s = self.playlist.next_song()
+        next_next = self.playlist.next_song()
+        self.assertFalse(curr_s == next_next())
 
 if __name__ == '__main__':
     unittest.main()
