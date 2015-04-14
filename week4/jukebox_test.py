@@ -21,7 +21,7 @@ class Test_JukeBox(unittest.TestCase):
                              album="Kings of Metal", length="7:30")
         songs = [self.hd, manowar_heart, manowar_hail, manowar_blood,
                  self.summer]
-        self.playlist = Playlist(name="misc.pl")
+        self.playlist = Playlist(name="misc.pl", repeat=False, shuffle=True)
 
         self.playlist.add_songs(songs)
 
@@ -79,11 +79,16 @@ class Test_JukeBox(unittest.TestCase):
         self.assertEqual(self.playlist.artists()['manowar'], 3)
 
     def test_next_song(self):
-        self.playlist._play_song()
         curr_s = self.playlist.next_song()
         next_s = self.playlist.next_song()
+        self.assertFalse(curr_s == next_s)
         next_next = self.playlist.next_song()
-        self.assertFalse(curr_s == next_next())
+        self.assertFalse(curr_s == next_next)
+        fourth = self.playlist.next_song()
+        fifth = self.playlist.next_song()
+        with self.assertRaises(ValueError):
+            self.playlist.next_song()
+
 
 if __name__ == '__main__':
     unittest.main()

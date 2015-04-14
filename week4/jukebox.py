@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import json
 from datetime import time
-from random import randint
+from random import randint, shuffle
 from copy import deepcopy
+
 
 class Song:
 
@@ -64,13 +65,14 @@ class Song:
 
 class Playlist:
     """ A playlist class """
+
     def __init__(self, name="PlayListName", repeat=False, shuffle=False):
         self.name = name
         self.repeat = repeat
         self.shuffle = shuffle
         self._playlist = []
+        self.__played_songs = []
         self.__current_song = None
-        self.__playing = []
 
     def add_song(self, song):
         """Adds a song to the playlist."""
@@ -78,7 +80,6 @@ class Playlist:
             raise TypeError("It's not a Song object!")
 
         self._playlist.append(song)
-        self.__playing = deepcopy(self._playlist)
 
     def remove_song(self, song):
         """If there is such song in the playlist deletes it."""
@@ -100,7 +101,6 @@ class Playlist:
                 raise TypeError("Objects ot type Song expected!")
 
         self._playlist += songs
-        self.__playing = deepcopy(self._playlist)
 
     def __humanize(self, secs):
         mins, secs = divmod(secs, 60)
@@ -124,29 +124,59 @@ class Playlist:
                 artists_histogram[song.artist] += 1
 
         return artists_histogram
-        
-    def __random_song(self, tmplaylist):
-        max_songs = len(tmplaylist)
-        return randint(0, max_songs)
-
-    def _play_song(self):
-        print(self.__playing)
-        track_number = self.__random_song(self.__playing)
-        if self.shuffle:
-            self.__current_song = self.__playing.pop(track_number)
-
-        self.__current_song = self.__playing.pop(0)
 
     def next_song(self):
-        if 0 == len(self.__playing) and self.repeat:
-            self.__playing = deepcopy(self._playlist)
-            self._play_song()
 
         if self.shuffle:
-            track_number = self.__random_song(self.__playing)
-            return self.__playing.pop(self.__playing.index(track_number))
+            shuffle(self._playlist)
+            self.shuffle = False
+
+        if self.__current_song is None:
+            next_one = self._playlist[0]
+            self.__played_songs.append(0)
+            self.__current_song = 0
+
+            return next_one
+
+        self.__current_song += 1
+
+        if self.__current_song in self.__played_songs:
+            self.__current_song += 1
+
+        if self.__current_song >= len(self._playlist) and self.repeat is True:
+            self.__current_song = 0
+            self.__played_songs = [0]
+            return self._playlist[self.__current_song]
+        elif self.__current_song >= len(self._playlist) and self.repeat is False:
+            raise ValueError("No more songs in the playlist")
+
+        return self._playlist[self.__current_song]
+
 
 if __name__ == "__main__":
-    hideaway = Song(
-        title="Hideaway", artist="Kiesza", album="Hideaway", length="4:34")
-    print(hideaway._length())
+    hideaway = Song(title="Hideaway", artist="Kiesza",
+                    album="Hideaway", length="4:34")
+    summer = Song(title="Summer", length="3:13",
+                  artist="Calvin Harris")
+    hd = Song(title="Hideaway", artist="Kiesza",
+              album="Hideaway", length="4:34")
+    manowar_hail = Song(title="Hail and Kill", artist="manowar",
+                        album="Kings of Metal", length="5:59")
+    manowar_heart = Song(title="Heart of Steal", artist="manowar",
+                         album="Kings of Metal", length="5:10")
+    manowar_blood = Song(title="Blood of the Kings", artist="manowar",
+                         album="Kings of Metal", length="7:30")
+    songs = [manowar_heart, hideaway, manowar_hail, summer, manowar_blood]
+    playlist = Playlist(name="misc.pl", repeat=True, shuffle=True)
+    playlist.add_songs(songs)
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
+    print(playlist.next_song())
