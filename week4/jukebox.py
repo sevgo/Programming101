@@ -154,8 +154,9 @@ class Playlist:
         return self._playlist[self.__current_song]
 
     def pprint_playlist(self):
-         table = [[element.artist, element.title, element.length] for element in self._playlist]
-         print(tabulate(table, headers=["Artist", "Song", "Length"], tablefmt="orgtbl"))
+         table = [[s.artist, s.title, s.length] for s in self._playlist]
+         headers = ["Artist", "Song", "Length"]
+         print(tabulate(table, headers, tablefmt="orgtbl"))
 
 
 if __name__ == "__main__":
