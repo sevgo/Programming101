@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+from tabulate import tabulate
 from datetime import time
 from random import randint, shuffle
 from copy import deepcopy
@@ -152,6 +153,10 @@ class Playlist:
 
         return self._playlist[self.__current_song]
 
+    def pprint_playlist(self):
+         table = [[element.artist, element.title, element.length] for element in self._playlist]
+         print(tabulate(table, headers=["Artist", "Song", "Length"], tablefmt="orgtbl"))
+
 
 if __name__ == "__main__":
     hideaway = Song(title="Hideaway", artist="Kiesza",
@@ -180,3 +185,4 @@ if __name__ == "__main__":
     print(playlist.next_song())
     print(playlist.next_song())
     print(playlist.next_song())
+    playlist.pprint_playlist()
