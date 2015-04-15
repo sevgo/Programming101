@@ -157,33 +157,3 @@ class Playlist:
          table = [[s.artist, s.title, s.length] for s in self._playlist]
          headers = ["Artist", "Song", "Length"]
          print(tabulate(table, headers, tablefmt="orgtbl"))
-
-
-if __name__ == "__main__":
-    hideaway = Song(title="Hideaway", artist="Kiesza",
-                    album="Hideaway", length="4:34")
-    summer = Song(title="Summer", length="3:13",
-                  artist="Calvin Harris")
-    hd = Song(title="Hideaway", artist="Kiesza",
-              album="Hideaway", length="4:34")
-    manowar_hail = Song(title="Hail and Kill", artist="manowar",
-                        album="Kings of Metal", length="5:59")
-    manowar_heart = Song(title="Heart of Steal", artist="manowar",
-                         album="Kings of Metal", length="5:10")
-    manowar_blood = Song(title="Blood of the Kings", artist="manowar",
-                         album="Kings of Metal", length="7:30")
-    songs = [manowar_heart, hideaway, manowar_hail, summer, manowar_blood]
-    playlist = Playlist(name="misc.pl", repeat=True, shuffle=True)
-    playlist.add_songs(songs)
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    print(playlist.next_song())
-    playlist.pprint_playlist()
