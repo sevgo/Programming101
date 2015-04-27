@@ -13,29 +13,38 @@ class Crowler:
         self.links = []
 
     def _normalize_url(self, link):
-        if link.startswith("link"):
-            link = self.url + '/' + link
+        return self.url + '/' + link
 
-        return link
-
-    def create_url_list(self):
-        links = []
+    def _raw_links(self):
+        tmp_links = []
         page = _req.get(self.url)
         soup = BeautifulSoup(page.text)
         for link in soup.find_all('a'):
-            address = link.get('href')
-            if address and address[0] != '#' and address[0] != '/':
-                address = self._normalize_url(address)
-                links.append(address)
+            url = link.get('href')
+            if url is not None:
+                if url.startswith('h'):
+                    tmp_links.append(url)
+                elif url.startswith('l'):
+                    tmp_links.append(self._normalize_url(url))
+                else:
+                    continue
 
-        return links
+        return tmp_links
 
-    def real_links(self, links_list):
-        pass
+    def real_links(self):
+        links = self._raw_links()
+        for element in links:
+            try:
+                r = _req.head(element, allow_redirects=True, timeout=10)
+                print(r.url)
+                self.links.append(r.url)
+            except TimeOut as err:
+                print("TimeOut: {}".format(err))
+
+        return True
 
 if __name__ == "__main__":
     c = Crowler("http://register.start.bg")
-    c.create_url_list()
+    c.real_links()
     for element in c.links:
-        print("---------------------------------")
         print(element)
