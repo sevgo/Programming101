@@ -12,8 +12,8 @@ UPDATE_EMPLOYEE = '''UPDATE users SET name = ?, monthly_salary = ?,
                     yearly_bonus = ?, position = ? WHERE id = ? '''
 
 
-def fetch_result(database, sql):
-    db = sqlite3.connect(database, detect_types=True)
+def fetch_result(sql):
+    db = sqlite3.connect(DB_NAME, detect_types=True)
     cursor = db.cursor()
     results = cursor.execute(sql)
     result = [el for el in results]
@@ -21,14 +21,14 @@ def fetch_result(database, sql):
     return result
 
 
-def list_employees(database):
-    result = fetch_result(database, LIST_EMPLOYEES)
+def list_employees():
+    result = fetch_result(LIST_EMPLOYEES)
     for row in result:
         print("%d - %s - %s" % row)
 
 
-def monthly_spending(database):
-    result = fetch_result(database, MONTHLY_SALARY)
+def monthly_spending():
+    result = fetch_result(MONTHLY_SALARY)
     total_salaries = 0
     for row in result:
         total_salaries += row[0]
@@ -36,47 +36,47 @@ def monthly_spending(database):
     return total_salaries
 
 
-def yearly_spending(database):
-    result = fetch_result(database, YEARLY_SPENDING)
+def yearly_spending():
+    result = fetch_result(YEARLY_SPENDING)
     money = [row for row in result]
     return sum([sum(el) for el in zip(*money)])
 
 
-def last_user_id(database, sql):
-    result = fetch_result(database, USER_ID)
+def last_user_id(sql):
+    result = fetch_result(USER_ID)
     ids = [row for row in zip(*result)]
     return max(ids.pop())
 
 
-def add_employee(database):
-    id = last_user_id(database, USER_ID) + 1
+def add_employee():
+    uid = last_user_id(USER_ID) + 1
     name = input("Name Family: ")
     monthly_salary = int(input("Monthly Salary: "))
     yearly_bonus = int(input("Yearly Bobys: "))
     position = input("Position in company: ")
-    db = sqlite3.connect(database)
+    db = sqlite3.connect(DB_NAME)
     cursor = db.cursor()
-    cursor.execute(INSERT_EMPLOYEE, (id, name, monthly_salary, yearly_bonus,
+    cursor.execute(INSERT_EMPLOYEE, (uid, name, monthly_salary, yearly_bonus,
                                      position))
 
     db.commit()
     db.close()
 
 
-def del_employee(database, uid):
-    db = sqlite3.connect(database)
+def del_employee(uid):
+    db = sqlite3.connect(DB_NAME)
     cursor = db.cursor()
     cursor.execute('''DELETE FROM users WHERE id = ? ''', (uid, ))
     db.commit()
     db.close()
 
 
-def update_employee(database, uid):
+def update_employee(uid):
     name = input("Name: ")
     monthly_salary = int(input("monthly_salary: "))
     yearly_bonus = int(input("yearly_bonus: "))
     position = input("Position: ")
-    db = sqlite3.connect(database)
+    db = sqlite3.connect(DB_NAME)
     cursor = db.cursor()
     cursor.execute(UPDATE_EMPLOYEE, (name, monthly_salary, yearly_bonus,
                                      position, uid))
@@ -84,25 +84,41 @@ def update_employee(database, uid):
     db.close()
 
 
+def help():
+    print(''' Available commands:
+          list_employees        :    list all employees
+          monthly_spending      :    print how much company spend every month
+          yearly_spending       :    print how much company spend every year
+          add_employee          :    add a new employee
+          update_employee       :    update all information about an employee
+          del_employee          :    delete an employee by given id
+          help                  :    print this help
+          quit                  :    exit
+          ''')
+
+
 def main():
-    cmd = ''
+    cmd = 'help'
     while cmd != 'quit':
         cmd = input("command> ")
         if cmd == 'list_employees':
-            list_employees(DB_NAME)
+            list_employees()
         elif cmd == 'monthly_spending':
-            print(monthly_spending(DB_NAME))
+            print(monthly_spending())
         elif cmd == 'yearly_spending':
-            print(yearly_spending(DB_NAME))
+            print(yearly_spending())
         elif cmd == 'add_employee':
-            add_employee(DB_NAME)
+            add_employee()
         elif cmd == 'del_employee':
             uid = int(input("ID: "))
-            del_employee(DB_NAME, uid)
+            del_employee(uid)
         elif cmd == 'update_employee':
             uid = int(input("ID: "))
-            update_employee(DB_NAME, uid)
+            update_employee(uid)
+        elif cmd == 'help':
+            help()
         else:
+            help()
             continue
 
 
