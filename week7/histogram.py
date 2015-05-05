@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import matplotlib.pyplot as plt
 
 class Histogram:
     def __init__(self):
@@ -26,3 +26,22 @@ class Histogram:
 
     def items(self):
         return self.histogram.items()
+
+    def draw(self):
+        servers = []
+        counts = []
+        for key, value in self.items():
+            servers.append(key)
+            counts.append(value)
+
+        x = servers
+        y = counts
+
+        width = list(range(len(x)))
+
+        plt.bar(width, y, align="center")
+        plt.xticks(width, x)
+        plt.xlabel("Server")
+        plt.ylabel("Count")
+        plt.title(".bg servers")
+        plt.save("servers_in_bgweb.png")

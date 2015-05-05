@@ -41,6 +41,14 @@ class Crowler:
 
         return tmp_links
 
+    def server(self, srv):
+        servers = ['apache', 'nginx', 'iis', 'lighttpd']
+        for element in servers:
+            if element in srv.lower():
+                return element
+
+        return 'other'
+
     def real_links(self):
         links = self._raw_links()
         visited = set()
@@ -51,6 +59,8 @@ class Crowler:
                 u = urlsplit(r.url)
                 if u.netloc not in visited and self.is_BG(u.netloc):
                     self.links.append(u.scheme + "://" + u.netloc)
+                    web_srv = self.server(r.headers['server'])
+                    self.histogram.add(web_srv)
                     visited.add(u.netloc)
 
             except Exception as err:
@@ -64,5 +74,4 @@ class Crowler:
 if __name__ == "__main__":
     c = Crowler("http://register.start.bg")
     if c.real_links():
-        for element in c.links:
-            print(element)
+        c.histogram.draw()
