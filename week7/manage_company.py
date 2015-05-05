@@ -2,13 +2,14 @@
 import sqlite3
 
 DB_NAME = "company.db"
-LIST_EMPLOYEES = '''SELECT name, position FROM users'''
+LIST_EMPLOYEES = '''SELECT id, name, position FROM users'''
 MONTHLY_SALARY = '''SELECT monthly_salary FROM users'''
 YEARLY_SPENDING = '''SELECT monthly_salary, yearly_bonus FROM users'''
 INSERT_EMPLOYEE = '''INSERT INTO users(id, name, monthly_salary, yearly_bonus,
                     position) VALUES(?, ?, ?, ?, ?)'''
 USER_ID = '''SELECT id FROM users'''
-LAST_ID = 0
+UPDATE_EMPLOYEE = '''UPDATE users SET name = ?, monthly_salary = ?,
+                    yearly_bonus = ?, position = ? WHERE id = ? '''
 
 
 def fetch_result(database, sql):
@@ -23,7 +24,7 @@ def fetch_result(database, sql):
 def list_employees(database):
     result = fetch_result(database, LIST_EMPLOYEES)
     for row in result:
-        print("%s - %s" % row)
+        print("%d - %s - %s" % row)
 
 
 def monthly_spending(database):
@@ -70,6 +71,19 @@ def del_employee(database, uid):
     db.close()
 
 
+def update_employee(database, uid):
+    name = input("Name: ")
+    monthly_salary = int(input("monthly_salary: "))
+    yearly_bonus = int(input("yearly_bonus: "))
+    position = input("Position: ")
+    db = sqlite3.connect(database)
+    cursor = db.cursor()
+    cursor.execute(UPDATE_EMPLOYEE, (name, monthly_salary, yearly_bonus,
+                                     position, uid))
+    db.commit()
+    db.close()
+
+
 def main():
     cmd = ''
     while cmd != 'quit':
@@ -85,6 +99,9 @@ def main():
         elif cmd == 'del_employee':
             uid = int(input("ID: "))
             del_employee(DB_NAME, uid)
+        elif cmd == 'update_employee':
+            uid = int(input("ID: "))
+            update_employee(DB_NAME, uid)
         else:
             continue
 
