@@ -44,4 +44,4 @@ class Histogram:
         plt.xlabel("Server")
         plt.ylabel("Count")
         plt.title(".bg servers")
-        plt.save("servers_in_bgweb.png")
+        plt.savefig("servers_in_bgweb.png")

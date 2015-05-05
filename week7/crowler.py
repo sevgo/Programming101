@@ -54,7 +54,7 @@ class Crowler:
         visited = set()
         for element in links:
             try:
-                r = _req.head(element, allow_redirects=True, timeout=1,
+                r = _req.head(element, allow_redirects=True, timeout=3,
                               headers=Crowler.HEADER)
                 u = urlsplit(r.url)
                 if u.netloc not in visited and self.is_BG(u.netloc):
