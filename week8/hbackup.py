@@ -30,7 +30,5 @@ class Database:
 
         return Database(fpath)
 
-    def __init__(self, db):
-        self.db = db
-
-
+    def __init__(self, dbfile):
+        self.db = dbfile
