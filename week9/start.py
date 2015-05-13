@@ -1,23 +1,25 @@
 import sql_manager
+from getpass import getpass
 
 
 def main_menu():
     print("Welcome to our bank service. You are not logged in. \nPlease register or login")
-    
+
     while True:
-        command = input("$$$>")
+        command = str(input("$$$> "))
         
-        if command == 'register':
-            username = input("Enter your username: ")
-            password = input("Enter your password: ")
+        if command == "register":
+            username = str(input("Enter your username: "))
+            # password = str(input("Enter your password: "))
+            password = getpass(prompt="Enter your password: ")
 
             sql_manager.register(username, password)
             
             print("Registration Successfull")
-        
-        elif command == 'login':
+        elif command == "login":
             username = input("Enter your username: ")
-            password = input("Enter your password: ")
+            # password = input("Enter your password: ")
+            password = getpass(prompt="Enter your password: ")
 
             logged_user = sql_manager.login(username, password)
 
@@ -25,16 +27,15 @@ def main_menu():
                 logged_menu(logged_user)
             else:
                 print("Login failed")
-        
-        elif command == 'help':
+        elif command == "help":
             print("login - for logging in!")
             print("register - for creating new account!")
             print("exit - for closing program!")
-
-        elif command == 'exit':
+        elif command == "exit":
             break
         else:
             print("Not a valid command")
+            continue
 
 
 def logged_menu(logged_user):
@@ -42,23 +43,23 @@ def logged_menu(logged_user):
     while True:
         command = input("Logged>>")
 
-        if command == 'info':
+        if command == "info":
             print("You are: " + logged_user.get_username())
             print("Your id is: " + str(logged_user.get_id()))
-            print("Your balance is:" + str(logged_user.get_balance()) + '$')
+            print("Your balance is:" + str(logged_user.get_balance()) + "$")
 
-        elif command == 'changepass':
+        elif command == "changepass":
             new_pass = input("Enter your new password: ")
             sql_manager.change_pass(new_pass, logged_user)
 
-        elif command == 'change-message':
+        elif command == "change-message":
             new_message = input("Enter your new message: ")
             sql_manager.change_message(new_message, logged_user)
         
-        elif command == 'show-message':
+        elif command == "show-message":
             print(logged_user.get_message())
 
-        elif command == 'help':
+        elif command == "help":
             print("info - for showing account info")
             print("changepass - for changing passowrd")
             print("change-message - for changing users message")
@@ -69,5 +70,5 @@ def main():
     sql_manager.create_clients_table()
     main_menu()
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    main_menu()
