@@ -1,24 +1,24 @@
+#!/usr/bin/env python3
 import sql_manager
 from getpass import getpass
 
 
 def main_menu():
-    print("Welcome to our bank service. You are not logged in. \nPlease register or login")
+    print("""Welcome to our bank service. You are not logged in.
+          Please register or login""")
 
     while True:
-        command = str(input("$$$> "))
-        
+        command = input("$$$> ")
+
         if command == "register":
-            username = str(input("Enter your username: "))
-            # password = str(input("Enter your password: "))
+            username = input("Enter your username: ")
             password = getpass(prompt="Enter your password: ")
 
             sql_manager.register(username, password)
-            
+
             print("Registration Successfull")
         elif command == "login":
             username = input("Enter your username: ")
-            # password = input("Enter your password: ")
             password = getpass(prompt="Enter your password: ")
 
             logged_user = sql_manager.login(username, password)
@@ -55,7 +55,7 @@ def logged_menu(logged_user):
         elif command == "change-message":
             new_message = input("Enter your new message: ")
             sql_manager.change_message(new_message, logged_user)
-        
+
         elif command == "show-message":
             print(logged_user.get_message())
 

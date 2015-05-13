@@ -1,13 +1,13 @@
+#!/usr/bin/env python3
 import sys
-import unittest
 import os
-
+from unittest import TestCase, main
+# Adding parent folder to PYTHON's environment
 sys.path.append("..")
-
 import sql_manager
 
 
-class SqlManagerTests(unittest.TestCase):
+class SqlManagerTests(TestCase):
 
     def setUp(self):
         sql_manager.create_clients_table()
@@ -15,7 +15,7 @@ class SqlManagerTests(unittest.TestCase):
 
     def tearDown(self):
         sql_manager.cursor.execute('DROP TABLE clients')
-    
+
     @classmethod
     def tearDownClass(cls):
         os.remove("bank.db")
@@ -23,7 +23,11 @@ class SqlManagerTests(unittest.TestCase):
     def test_register(self):
         sql_manager.register('Dinko', '123123')
 
-        sql_manager.cursor.execute('SELECT Count(*)  FROM clients WHERE username = (?) AND password = (?)', ('Dinko', '123123'))
+        sql_manager.cursor.execute("""SELECT Count(*)
+                                   FROM clients
+                                   WHERE username = (?) AND password = (?)""",
+                                   ('Dinko', '123123'))
+
         users_count = sql_manager.cursor.fetchone()
 
         self.assertEqual(users_count[0], 1)
@@ -51,4 +55,4 @@ class SqlManagerTests(unittest.TestCase):
         self.assertEqual(logged_user_new_password.get_username(), 'Tester')
 
 if __name__ == '__main__':
-    unittest.main()
+    main()
