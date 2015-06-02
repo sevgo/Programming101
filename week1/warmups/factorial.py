@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-# We cannot use math.factorial(n) I guess 
+# We cannot use math.factorial(n) I guess
+
 
 def factorial(n):
     """ Calculates factoriel of give number
@@ -13,4 +13,4 @@ def factorial(n):
 
 
 if __name__ == "__main__":
-    print (factorial(6))
+    print(factorial(6))

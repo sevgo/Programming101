@@ -1,8 +1,7 @@
-#!/usr/bin/env python3 
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 def to_number(digits):
-    """ Function which takes a list of integers - digits 
+    """ Function which takes a list of integers - digits
     and returns the number, containing those digits """
     p = 0
     for n in digits:

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 def to_digits(n):
+
     """Takes an integer n and returns a list, containing the digits of n."""
+
     digitsList = []
     while n > 0:
         digitsList.append(n % 10)

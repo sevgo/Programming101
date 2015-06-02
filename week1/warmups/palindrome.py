@@ -1,5 +1,9 @@
-def palindrome(obj):                                                            
+#!/usr/bin/env python3
+
+
+
+def palindrome(obj):
     return obj == obj[::-1]
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     print (palindrome("\"abba_abba"))

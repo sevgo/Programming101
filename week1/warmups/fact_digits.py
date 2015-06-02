@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-from factoriel import factoriel
+from factorial import factorial
 
 
 def fact_digits(number):
     summ = 0
     while number > 0:
-        p = number % 10                                                         
-        summ += factoriel(p)
-        number = number // 10                                                   
+        p = number % 10
+        summ += factorial(p)
+        number = number // 10
 
     return summ
 
