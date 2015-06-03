@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import unittest
 from char_histogram import char_histogram
 

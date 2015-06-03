@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 def count_consonants(string):
-    """ Function which returns the count of 
+
+    """ Function which returns the count of
     all consonants in the string \"string\" """
+
     consonants = "bcdfghjklmnpqrstvwxz"
     counter = 0
     if string:
