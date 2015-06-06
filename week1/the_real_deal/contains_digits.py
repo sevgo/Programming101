@@ -1,7 +1,6 @@
-#!/usr/bin/env python3 
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
-from contains_digit import contains_digit 
+from contains_digit import contains_digit
 
 
 def contains_digits(number, digits):

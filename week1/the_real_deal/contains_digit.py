@@ -1,5 +1,4 @@
-#!/usr/bin/env python3 
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 def contains_digit(number, digit):
     return str(digit) in str(number)

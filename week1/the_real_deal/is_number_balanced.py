@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 from to_digits import to_digits
-
 
 def is_number_balanced(n):
     digits = to_digits(n)
@@ -11,7 +9,7 @@ def is_number_balanced(n):
         m = med
     else:
         m = med + 1
-        
+
     return sum(digits[0:med]) == sum(digits[m:])
 
 if __name__ == "__main__":
