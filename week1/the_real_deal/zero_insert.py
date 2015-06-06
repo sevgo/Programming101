@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 from to_digits import to_digits
 from to_number import to_number
@@ -10,7 +9,7 @@ def zero_insert(n):
     number = to_digits(n)
     p.append(number[0])
     x = 0
-    while x < len(number) -1:
+    while x < len(number) - 1:
         if number[x] == number[x+1] or (number[x]+number[x+1]) % 10 == 0:
             p.append(0)
 
