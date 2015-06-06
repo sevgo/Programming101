@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 from sum_matrix import sum_matrix
 from copy import deepcopy
