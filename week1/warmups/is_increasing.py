@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 def is_increasing(seq):
@@ -8,7 +7,3 @@ def is_increasing(seq):
             return False
 
     return True
-
-
-if __name__ == "__main__":
-    print (is_increasing([1, 6, 7, 8, 9]))
